@@ -1,5 +1,6 @@
 package com.rolax.data_collection.web.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.rolax.data_collection.domain.Sensor;
 import com.rolax.data_collection.domain.dto.SensorDataDTO;
 import com.rolax.data_collection.kafka.producer.MessageProducer;
@@ -27,7 +28,7 @@ public class KafkaController {
 //    }
 
     @Scheduled(fixedRate = 5000)
-    public void readFlowSensors() {
+    public void readFlowSensors() throws JsonProcessingException {
         List<Sensor> sensors = sensorService.getSensors();
         Double readings = sensorService.generateReading();
         for (Sensor sensor: sensors) {

@@ -1,0 +1,45 @@
+<div ng-controller="DashboardController">
+
+    <div id="alertDiv" class="alert-div">
+        <h2>Anomalous Water Reading Detected!</h2>
+        <p>One or more sensors have detected abnormal water flow or consumption.</p>
+        <ul id="anomalyDetails"></ul>
+    </div>
+    <div class="dashboard-header">
+        <h1>NAWASCO Monitoring Dashboard</h1>
+    </div>
+
+    <div class="dashboard-content">
+        <!-- Water Flow Section -->
+        <div class="water-flow">
+            <h2>Water Flow</h2>
+            <canvas id="myChart" class="chart" height="400"></canvas>
+        </div>
+
+        <!-- Sensor Map Section -->
+        <div class="sensor-map">
+            <h2>Sensor Locations</h2>
+            <div id="map"></div>
+        </div>
+    </div>
+
+    <div class="additional-stats">
+        <!-- Consumption Levels -->
+        <div class="consumption">
+            <h2>Water Consumption</h2>
+            <canvas id="consumptionChart" class="chart"></canvas>
+        </div>
+
+        <!-- Historical Data -->
+        <div class="history">
+            <h2>Historical Data</h2>
+            <canvas id="historyChart" class="chart"></canvas>
+        </div>
+
+        <!-- Anomaly Detection -->
+        <div class="anomaly">
+        <h2>Anomaly Detection</h2>
+        <canvas id="anomalyChart" class="chart"></canvas>
+        </div>
+    </div>
+</div>

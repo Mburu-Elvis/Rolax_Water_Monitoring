@@ -1,16 +1,32 @@
-package com.rolax.data_collection.domain.dto;
+package com.data_ingestion.dataIngestion.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.data_ingestion.dataIngestion.enums.SensorType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
-public class SensorDataDTO {
+@Entity
+public class SensorReading {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private Long sensorId;
+
     private Double reading;
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private LocalDateTime timeStamp;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getSensorId() {
         return sensorId;
@@ -19,6 +35,7 @@ public class SensorDataDTO {
     public void setSensorId(Long sensorId) {
         this.sensorId = sensorId;
     }
+
 
     public Double getReading() {
         return reading;
@@ -38,15 +55,11 @@ public class SensorDataDTO {
 
     @Override
     public String toString() {
-        return "SensorDataDTO{" +
-                "sensorId=" + sensorId +
+        return "SensorReading{" +
+                "id=" + id +
+                ", sensorId=" + sensorId +
                 ", reading=" + reading +
                 ", timeStamp=" + timeStamp +
                 '}';
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(sensorId, reading, timeStamp);
     }
 }

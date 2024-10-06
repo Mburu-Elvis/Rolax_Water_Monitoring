@@ -1,0 +1,170 @@
+/* Base Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f4f8;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.alert-div {
+    position: fixed;
+    top: -100px;
+    /* Initially hidden above the screen */
+    left: 0;
+    width: 100%;
+    background-color: #ff4d4d;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    z-index: 1000;
+    transition: top 0.5s ease-in-out;
+    /* Slide down animation */
+    font-family: Arial, sans-serif;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.alert-div h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.alert-div p {
+    margin: 5px 0;
+}
+
+.alert-div ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+}
+
+/* When the alert div is active, it will slide down */
+.alert-active {
+    top: 0;
+    /* Slide down to the top of the page */
+}
+
+h1,
+h2 {
+    margin-bottom: 20px;
+    color: #0066cc;
+    /* Company brand color */
+    font-weight: bold;
+}
+
+.dashboard-header {
+    background-color: rgba(39, 245, 159, 0.36);
+    padding: 20px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.dashboard-header h1 {
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+/* Layout for Water Flow and Map */
+.dashboard-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 40px auto;
+    max-width: 1200px;
+}
+
+/* Water Flow Chart Section */
+.water-flow {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    flex: 1 1 45%;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.water-flow:hover {
+    transform: scale(1.05);
+}
+
+.water-flow canvas {
+    width: 100% !important;
+    max-width: 600px;
+    height: auto !important;
+}
+
+/* Sensor Map Section */
+.sensor-map {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1 1 45%;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.sensor-map:hover {
+    transform: scale(1.05);
+}
+
+#map {
+    height: 500px;
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+/* Additional Data Visualizations */
+.additional-stats {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 40px auto;
+    max-width: 1200px;
+}
+
+.consumption,
+.history,
+.anomaly {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    flex: 1 1 30%;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.consumption:hover,
+.history:hover,
+.anomaly:hover {
+    transform: scale(1.05);
+}
+
+.chart {
+    padding: 20px;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+
+    .dashboard-content,
+    .additional-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .water-flow,
+    .sensor-map,
+    .consumption,
+    .history,
+    .anomaly {
+        flex: 1 1 90%;
+    }
+}

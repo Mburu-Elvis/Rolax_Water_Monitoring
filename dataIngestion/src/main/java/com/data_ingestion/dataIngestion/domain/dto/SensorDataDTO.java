@@ -1,4 +1,4 @@
-package com.rolax.data_collection.domain.dto;
+package com.data_ingestion.dataIngestion.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -8,7 +8,6 @@ import java.util.Objects;
 public class SensorDataDTO {
     private Long sensorId;
     private Double reading;
-
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
     private LocalDateTime timeStamp;
 
