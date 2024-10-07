@@ -43,7 +43,7 @@ Visualize the locations of IoT sensors (meters and water flow sensors) on a map,
 
 ![Abnormal Flow](abnormalFlow.png)
 
-The system continuously monitors data streams from the sensors and automatically detects anomalies (e.g., leaks, irregular flow). When an issue is detected or reported via the SMS channel, alerts are immediately generated and sent to stakeholders via email, SMS, or through the web interface, allowing for quick response and resolution.
+The system continuously monitors data streams from the sensors and automatically detects anomalies (e.g., leaks, irregular flow). When an issue is detected or reported via the SMS channel, alerts are immediately generated and sent to stakeholders via SMS, or through the web interface, allowing for quick response and resolution.
 
 #### Scalable Streaming Architecture
 
