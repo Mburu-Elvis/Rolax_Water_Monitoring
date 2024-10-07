@@ -1,50 +1,18 @@
 app.controller("DashboardController", ["$scope", "$http", "$route", "$location", "$websocket", function($scope, $http, $route, $location, $websocket) {
-    // const socket = new SockJS('http://localhost:8084/readings-ws'); // Use http:// for SockJS
-    // const stompClient = Stomp.over(socket);
-    
-    // Chart instances
+
     let waterFlowChart, consumptionChart, historyChart, anomalyChart;
-
-    // stompClient.connect({}, function(frame) {
-    //     console.log('Connected: ' + frame);
-    //     stompClient.subscribe('/readings/updates', function(message) {
-    //         $scope.averageReading = JSON.parse(message.body);
-    //         $scope.$apply(); // Ensure AngularJS knows about the change
-    //     });
-    // });
-
-    // $scope.$on('$destroy', function() {
-    //     stompClient.disconnect(); // Disconnect when the controller is destroyed
-    //     if (waterFlowChart) waterFlowChart.destroy();
-    //     if (consumptionChart) consumptionChart.destroy();
-    //     if (historyChart) historyChart.destroy();
-    //     if (anomalyChart) anomalyChart.destroy();
-    // });
-
-    // function generateWaterFlowData(points) {
-    //     const data = [];
-    //     const labels = [];
-    //     let currentTime = new Date();
-    
-    //     for (let i = 0; i < points; i++) {
-    //         labels.push(currentTime.toTimeString().split(' ')[0]); // Time in HH:MM:SS format
-    //         data.push(Math.random() * (10 - 5) + 5); // Random flow between 5 and 10 liters/sec
-    //         currentTime.setMinutes(currentTime.getMinutes() + 1); // Increment time by 1 minute
-    //     }
-    
-    //     return { labels, data };
-    // }
 
     const data = [];
     const labels = [];
+    const THRESHOLD = 53;
 
-    // Get the current time for labeling
     let currentTime = new Date();
 
     $scope.fetchSensorReading = function() {
         const apiUrl = 'https://stallion-holy-informally.ngrok-free.app/sensor-average';
+        const alertDiv = document.getElementById('alertDiv');
+        const details = document.getElementById('anomalyDetails');
     
-        // Make an HTTP GET request using AngularJS $http service
         $http({
             method: 'GET',
             url: apiUrl,
@@ -52,37 +20,39 @@ app.controller("DashboardController", ["$scope", "$http", "$route", "$location",
             headers: {
                 'ngrok-skip-browser-warning': 'hello',
                 'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json' // Set Content-Type correctly
+                'Content-Type': 'application/json'
             }
         }).then(function(response) {
             // Success callback
-            console.log("Response:", response); // Log the response object for debugging
-    
-            // Check if the response is OK
-            if (response.status === 200) { // AngularJS $http returns a response object with status
-                const reading = response.data; // Assuming response.data contains the desired JSON
-                console.log("Reading:", reading); // Log the parsed JSON
-                updateChart(reading.average); // Update the chart with the average value
+            console.log("Response:", response); 
+            if (response.status === 200) { 
+                const reading = response.data; 
+                console.log("Reading:", reading);
+                updateChart(reading.average);
+
+                if (reading.average < THRESHOLD) {
+                    console.log("Readings lower than threshold");
+                    alertDiv.style.display = 'block';
+                    details.innerHTML = `<li>Current Reading: ${reading.average}</li>`
+                } else {
+                    alertDiv.style.display = 'none';
+                }
             } else {
                 console.error("Error fetching sensor reading:", response.status, response.statusText);
             }
         }, function(error) {
-            // Error callback
             console.error("Error fetching sensor reading:", error);
         });
     };
+
     // Function to update the chart
     function updateChart(reading) {
         const now = new Date();
         
-        // Add new reading and corresponding timestamp
-        data.push(reading); // Add the latest reading to the data array
-        labels.push(now.toLocaleTimeString()); // Use the time as the label
-    
-        // Remove data older than 1 hour
+        data.push(reading); 
+        labels.push(now.toLocaleTimeString()); 
         removeOldData();
     
-        // Update the chart
         waterFlowChart.update();
     }
 
@@ -92,12 +62,10 @@ app.controller("DashboardController", ["$scope", "$http", "$route", "$location",
     
         // Filter out readings older than 1 hour
         while (labels.length > 0 && new Date(labels[0]) < oneHourAgo) {
-            labels.shift(); // Remove the oldest label
-            data.shift();   // Remove the oldest data point
+            labels.shift(); 
+            data.shift();
         }
     }
-    
-    // const flowData =  generateWaterFlowData(50);
     
     const ctx = document.getElementById('myChart').getContext('2d');
     waterFlowChart = new Chart(ctx, {
@@ -130,8 +98,8 @@ app.controller("DashboardController", ["$scope", "$http", "$route", "$location",
         },
         elements: {
             point: {
-                radius: 5, // Size of the points
-                hoverRadius: 7 // Size of the points on hover
+                radius: 5,
+                hoverRadius: 7
             }
         }
     });
